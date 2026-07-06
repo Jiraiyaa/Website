@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackframe Studio — Modern Websites for Local Businesses</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Instrument Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Instrument Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        studio: {
+                            bgDark: '#0A0A0A',      // Premium rich black
+                            cardDark: '#121212',    // Subtle dark charcoal
+                            bgLight: '#FAF9F6',     // Elegant cream/off-white
+                            mutedText: '#8E8C88',   // Muted gray for body copy
+                            borderLight: '#D8D6D0', // Thin borders for light sections
+                            borderDark: '#222222',  // Thin borders for dark sections
+                            accent: '#C5A880',      // Subtle warm gold/bronze
+                            accentHover: '#B2956E'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection {
+            background-color: #C5A880;
+            color: #0A0A0A;
+        }
+
+        /* Directional Scroll Reveal Engine using Modern CSS 'translate' & Subtle 3px 'blur' */
+        @media (prefers-reduced-motion: no-preference) {
+            /* Mobile Default: All transitions default to a vertical translate of 40px with a 3px blur */
+            .reveal-up, .reveal-left, .reveal-right {
+                opacity: 0;
+                translate: 0 40px;
+                filter: blur(3px);
+                
+                /* Explicit property durations and non-delayed hover states */
+                transition-property: opacity, translate, filter, transform, border-color, box-shadow;
+                transition-duration: 1150ms, 1150ms, 1150ms, 450ms, 450ms, 450ms;
+                transition-delay: var(--reveal-delay, 0ms), var(--reveal-delay, 0ms), var(--reveal-delay, 0ms), 0ms, 0ms, 0ms;
+                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                will-change: translate, opacity, filter, transform;
+            }
+            
+            /* Desktop Override: Apply side translations (reduced to 32px for premium feel) on screens 768px and up */
+            @media (min-width: 768px) {
+                .reveal-left {
+                    translate: -32px 0;
+                }
+                .reveal-right {
+                    translate: 32px 0;
+                }
+            }
+            
+            /* Active State: Zero out translate & blur values cleanly */
+            .reveal-up.active, 
+            .reveal-left.active, 
+            .reveal-right.active {
+                opacity: 1;
+                translate: 0 0;
+                filter: blur(0);
+            }
+
+            /* Premium Card: Transition using transform only, avoiding reveal coordinate collision */
+            .premium-card {
+                /* Transform and aesthetics handled cleanly with 450ms responsive timing */
+                transform: translateY(0);
+            }
+            .premium-card:hover {
+                transform: translateY(-4px);
+                border-color: #C5A880 !important;
+                box-shadow: 0 10px 30px -10px rgba(197, 168, 128, 0.15);
+            }
+        }
+
+        /* Fallback for users with reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-up, .reveal-left, .reveal-right, .premium-card {
+                opacity: 1 !important;
+                translate: none !important;
+                transform: none !important;
+                transition: none !important;
+                filter: none !important;
+            }
+            .mockup-scroller {
+                animation: none !important;
+            }
+        }
+
+        /* Typewriter Cursor styling */
+        @media (prefers-reduced-motion: no-preference) {
+            .typing-cursor {
+                border-right: 2px solid currentColor;
+                animation: blink-caret 0.75s step-end infinite;
+                padding-right: 2px;
+            }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: currentColor }
+        }
+
+        /* Magnetic button setup */
+        .magnetic-btn {
+            will-change: transform;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Device mockup perspective viewport */
+        .tilt-viewport {
+            perspective: 1000px;
+        }
+        .tilt-element {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+
+        /* Premium Seamless Horizontal Carousel Loops (No double-pause on the loop boundary) */
+        @keyframes syncHorizontalCarousel {
+            0%, 20% { transform: translateX(0); }
+            25%, 45% { transform: translateX(-20%); }
+            50%, 70% { transform: translateX(-40%); }
+            75%, 95% { transform: translateX(-60%); }
+            100% { transform: translateX(-80%); }
+        }
+        .sync-carousel-desktop, 
+        .sync-carousel-mobile {
+            animation: syncHorizontalCarousel 22s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-studio-bgDark text-white font-sans antialiased overflow-x-hidden">
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-[2px] bg-studio-accent z-[100] transition-all duration-75 ease-out" style="width: 0%;"></div>
+
+    <!-- 1. Header -->
+    <header class="sticky top-0 z-50 bg-studio-bgDark/90 backdrop-blur-md border-b border-studio-borderDark">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-serif italic font-semibold text-2xl tracking-tight group-hover:text-studio-accent transition-colors">B</span>
+                <span class="tracking-[0.25em] text-[10px] uppercase font-light border-l border-studio-borderDark pl-3">BLACKFRAME</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-[11px] tracking-widest uppercase font-medium text-white/85">
+                <a href="#services" class="hover:text-studio-accent transition-colors">Services</a>
+                <a href="#industries" class="hover:text-studio-accent transition-colors">Industries</a>
+                <a href="#concepts" class="hover:text-studio-accent transition-colors">Concept Work</a>
+                <a href="#process" class="hover:text-studio-accent transition-colors">Process</a>
+                <a href="#pricing" class="hover:text-studio-accent transition-colors">Pricing</a>
+                <a href="#contact" class="hover:text-studio-accent transition-colors">Contact</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#contact" class="magnetic-btn px-5 py-2.5 bg-studio-accent text-studio-bgDark text-[11px] tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300">
+                    Let's Talk &rarr;
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-white focus:outline-none" aria-label="Toggle Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-studio-bgDark border-b border-studio-borderDark absolute w-full left-0 z-40 px-6 py-8 shadow-md">
+            <nav class="flex flex-col gap-5 text-xs tracking-widest uppercase font-medium">
+                <a href="#services" class="hover:text-studio-accent transition-colors">Services</a>
+                <a href="#industries" class="hover:text-studio-accent transition-colors">Industries</a>
+                <a href="#concepts" class="hover:text-studio-accent transition-colors">Concept Work</a>
+                <a href="#process" class="hover:text-studio-accent transition-colors">Process</a>
+                <a href="#pricing" class="hover:text-studio-accent transition-colors">Pricing</a>
+                <a href="#contact" class="hover:text-studio-accent transition-colors">Contact</a>
+                <hr class="border-studio-borderDark my-1">
+                <a href="#contact" class="inline-block text-center py-3 bg-studio-accent text-studio-bgDark font-semibold">
+                    Let's Talk &rarr;
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section id="hero-trigger" class="relative min-h-[85vh] flex items-center py-12 lg:py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full font-light">
+            <!-- Left Column: Copy & Actions (Reveals from Left) -->
+            <div class="reveal-left lg:col-span-6 flex flex-col items-start z-10">
+                <span class="typewriter text-[10px] tracking-[0.3em] uppercase font-semibold text-studio-accent mb-4 block min-h-[1.5rem]" data-typewriter="We design. We build. You grow.">We design. We build. You grow.</span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif text-white leading-[1.1] mb-6">
+                    Modern Websites That <span class="typewriter italic font-normal text-studio-accent inline-block text-left min-w-[1.6em]" data-typewriter="Grow">Grow</span> Your Business.
+                </h1>
+                <p class="text-studio-mutedText text-sm sm:text-base leading-relaxed max-w-xl mb-10">
+                    We design fast, modern, and mobile-friendly websites that help local businesses look professional, build trust, and get more customers. Built for cafes, salons, clinics, and service brands.
+                </p>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+                    <a href="#contact" class="magnetic-btn px-8 py-4 bg-white text-studio-bgDark text-xs tracking-widest uppercase font-semibold hover:bg-studio-accent transition-colors text-center">
+                        Get Your Website
+                    </a>
+                    <a href="#concepts" class="magnetic-btn px-8 py-4 border border-white/20 text-white text-xs tracking-widest uppercase font-semibold hover:border-white transition-colors text-center">
+                        View Concept Work
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: Premium Interactive CSS Device Mockups (Symmetric synchronized carousel) -->
+            <div class="reveal-right lg:col-span-6 flex items-center justify-center relative w-full h-full min-h-[400px] lg:min-h-[500px] tilt-viewport">
+                <!-- Soft Warm Ambient Screen Glow behind devices -->
+                <div class="absolute w-[80%] h-[80%] bg-studio-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <div class="w-full h-full relative flex items-center justify-center tilt-element">
+                    <!-- Laptop Bezel Framework -->
+                    <div class="relative w-full max-w-[420px] md:max-w-[480px] bg-[#1a1a1a] rounded-2xl border border-zinc-800 p-2 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden group hover:border-studio-accent transition-all duration-500">
+                        <!-- Screen Surface -->
+                        <div class="aspect-video bg-[#FAF9F6] border border-zinc-900 rounded-lg overflow-hidden relative">
+                            <!-- Reflective Gloss Overlay Sheet -->
+                            <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.03] to-white/[0.08] pointer-events-none z-20"></div>
+                            
+                            <!-- Horizontal Carousel Track -->
+                            <div class="absolute inset-0 overflow-hidden text-studio-bgDark select-none rounded-lg">
+                                <div class="sync-carousel-desktop mockup-scroller w-[500%] h-full flex flex-row">
+                                    
+                                    <!-- [LAPTOP] Slide 1: Premium Cafe -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/cafe-desktop.webp" alt="Cafe Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [LAPTOP] Slide 2: Clinic / Wellness -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/wellness-desktop.webp" alt="Wellness Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [LAPTOP] Slide 3: Restaurant / Local Brand -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/restaurant-desktop.webp" alt="Restaurant Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [LAPTOP] Slide 4: Salon / Beauty Studio -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/salon-desktop.webp" alt="Salon Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [LAPTOP] Slide 5: Duplicate of Slide 1 (For Seamless Horizontal Wrapping - transient transition frame) -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/cafe-desktop.webp" alt="Cafe Desktop Portfolio Duplicate" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Laptop Base Bar (Kept simple & consistent) -->
+                        <div class="w-full h-1.5 bg-[#121212] border-t border-zinc-700/40 mt-1 rounded-b-md"></div>
+                    </div>
+
+                    <!-- Overlapping Phone Bezel Framework -->
+                    <div class="absolute bottom-[-10px] right-[4%] sm:right-[8%] w-24 sm:w-36 aspect-[9/19] bg-zinc-950 rounded-[1.4rem] sm:rounded-[1.8rem] border-[3px] sm:border-[4px] border-zinc-900 shadow-[0_25px_50px_-10px_rgba(0,0,0,0.9)] p-1 sm:p-1.5 overflow-hidden group hover:border-studio-accent transition-all duration-500">
+                        <div class="w-full h-full bg-zinc-900 rounded-[1rem] sm:rounded-[1.3rem] overflow-hidden relative">
+                            <!-- Reflective Gloss Overlay Sheet -->
+                            <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.04] to-white/[0.1] pointer-events-none z-20"></div>
+                            
+                            <!-- Phone notch spacer -->
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-10 sm:w-12 h-2.5 sm:h-3 bg-zinc-950 rounded-b-md z-30"></div>
+                            
+                            <!-- Scrolling Content Mobile Viewport -->
+                            <div class="absolute inset-0 overflow-hidden text-studio-bgDark select-none rounded-[1rem] sm:rounded-[1.3rem]">
+                                <div class="sync-carousel-mobile mockup-scroller w-[500%] h-full flex flex-row">
+                                    
+                                    <!-- [MOBILE] Slide 1: Premium Cafe -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/cafe-mobile.webp" alt="Cafe Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [MOBILE] Slide 2: Clinic / Wellness -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/wellness-mobile.webp" alt="Wellness Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [MOBILE] Slide 3: Restaurant / Local Brand -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/restaurant-mobile.webp" alt="Restaurant Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [MOBILE] Slide 4: Salon / Beauty Studio -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/salon-mobile.webp" alt="Salon Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                    <!-- [MOBILE] Slide 5: Duplicate of Slide 1 -->
+                                    <div class="w-[20%] h-full relative">
+                                        <img src="assets/cafe-mobile.webp" alt="Cafe Mobile Portfolio Duplicate" class="w-full h-full object-cover object-top">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Local Business Strip -->
+    <div class="border-y border-studio-borderDark bg-studio-cardDark/40 py-8 px-6 lg:px-12 w-full">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium tracking-[0.2em] text-studio-mutedText">
+            <span class="uppercase text-studio-accent text-[10px] font-semibold tracking-[0.3em]">Designed for Local Businesses:</span>
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 uppercase text-[11px] text-white/80">
+                <span>Cafes</span>
+                <span class="text-studio-accent">•</span>
+                <span>Restaurants</span>
+                <span class="text-studio-accent">•</span>
+                <span>Clinics</span>
+                <span class="text-studio-accent">•</span>
+                <span>Salons</span>
+                <span class="text-studio-accent">•</span>
+                <span>Gyms</span>
+                <span class="text-studio-accent">•</span>
+                <span>Local Shops</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Services Section (Light Background) -->
+    <section id="services" class="bg-studio-bgLight text-studio-bgDark py-20 md:py-24 px-6 lg:px-12">
+        <div class="max-w-7xl mx-auto">
+            <!-- Services Heading (Fades Up) -->
+            <div class="reveal-up text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent">What We Do</span>
+                <h2 class="typewriter text-3xl sm:text-4xl md:text-5xl font-serif text-studio-bgDark mt-2 min-h-[1.5em] md:min-h-[1.2em]" data-typewriter="Websites That Do More">Websites That Do More</h2>
+            </div>
+
+            <!-- Service Cards (Fade Up Staggered) -->
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Custom Design -->
+                <div class="reveal-up premium-card p-8 bg-white border border-studio-borderLight">
+                    <div class="w-10 h-10 mb-6 text-studio-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2 text-studio-bgDark">Custom Design</h3>
+                    <p class="text-studio-mutedText text-sm leading-relaxed font-light">We design clean, professional websites made specifically to represent your physical business online.</p>
+                </div>
+
+                <!-- Mobile Friendly -->
+                <div class="reveal-up premium-card p-8 bg-white border border-studio-borderLight">
+                    <div class="w-10 h-10 mb-6 text-studio-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2 text-studio-bgDark">Mobile Friendly</h3>
+                    <p class="text-studio-mutedText text-sm leading-relaxed font-light">Your website will look beautiful and work smoothly on every phone, tablet, and computer screen.</p>
+                </div>
+
+                <!-- Fast & Optimized -->
+                <div class="reveal-up premium-card p-8 bg-white border border-studio-borderLight">
+                    <div class="w-10 h-10 mb-6 text-studio-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2 text-studio-bgDark">Fast & Optimized</h3>
+                    <p class="text-studio-mutedText text-sm leading-relaxed font-light">We build fast-loading websites so your visitors never have to wait for your pages to open.</p>
+                </div>
+
+                <!-- Lead & Booking -->
+                <div class="reveal-up premium-card p-8 bg-white border border-studio-borderLight">
+                    <div class="w-10 h-10 mb-6 text-studio-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2 text-studio-bgDark">Lead & Booking</h3>
+                    <p class="text-studio-mutedText text-sm leading-relaxed font-light">Easy click-to-chat buttons, contact forms, and booking setups built directly into your pages.</p>
+                </div>
+
+                <!-- SEO Ready -->
+                <div class="reveal-up premium-card p-8 bg-white border border-studio-borderLight">
+                    <div class="w-10 h-10 mb-6 text-studio-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2 text-studio-bgDark">SEO Ready</h3>
+                    <p class="text-studio-mutedText text-sm leading-relaxed font-light">Optimized so Google can easily find, rank, and show your business to local customers in your area.</p>
+                </div>
+
+                <!-- Support & Care -->
+                <div class="reveal-up premium-card p-8 bg-white border border-studio-borderLight">
+                    <div class="w-10 h-10 mb-6 text-studio-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2 text-studio-bgDark">Support & Care</h3>
+                    <p class="text-studio-mutedText text-sm leading-relaxed font-light">We don't disappear after launching. We're here to help you update menus, change text, or add new photos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Industries Section (Dark Background) -->
+    <section id="industries" class="bg-studio-bgDark py-20 md:py-24 px-6 lg:px-12 border-t border-studio-borderDark">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Column (Reveals from Left) -->
+                <div class="reveal-left lg:col-span-5">
+                    <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent">Industry Solutions</span>
+                    <h2 class="text-3xl sm:text-4xl font-serif mt-3 mb-6">Websites Built for Your Specific Business</h2>
+                    <p class="text-studio-mutedText text-sm font-light leading-relaxed">
+                        We design simple, clean websites that make it easy for your customers to call you, find your location, or book an appointment.
+                    </p>
+                </div>
+                
+                <!-- Right Column (Each Row Reveals Separately with Smooth reveal-up) -->
+                <div id="industries-list" class="lg:col-span-7 divide-y divide-studio-borderDark border-y border-studio-borderDark">
+                    <div class="reveal-up py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 group">
+                        <span class="text-xl font-serif group-hover:text-studio-accent transition-colors duration-300">Cafes & Restaurants</span>
+                        <span class="text-[10px] text-studio-mutedText uppercase tracking-widest font-mono group-hover:translate-x-1.5 transition-transform duration-300">Menus • Locations • Call Hooks</span>
+                    </div>
+                    <div class="reveal-up py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 group">
+                        <span class="text-xl font-serif group-hover:text-studio-accent transition-colors duration-300">Clinics & Doctors</span>
+                        <span class="text-[10px] text-studio-mutedText uppercase tracking-widest font-mono group-hover:translate-x-1.5 transition-transform duration-300">Service Lists • Query Flows • Credentials</span>
+                    </div>
+                    <div class="reveal-up py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 group">
+                        <span class="text-xl font-serif group-hover:text-studio-accent transition-colors duration-300">Salons & Beauty Studios</span>
+                        <span class="text-[10px] text-studio-mutedText uppercase tracking-widest font-mono group-hover:translate-x-1.5 transition-transform duration-300">Galleries • Service Lists • Direct Contacts</span>
+                    </div>
+                    <div class="reveal-up py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 group">
+                        <span class="text-xl font-serif group-hover:text-studio-accent transition-colors duration-300">Local Shops & Gyms</span>
+                        <span class="text-[10px] text-studio-mutedText uppercase tracking-widest font-mono group-hover:translate-x-1.5 transition-transform duration-300">Visual Showcases • Location Maps • Booking Hooks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Concept Work Section (Dark Background) -->
+    <section id="concepts" class="bg-studio-bgDark py-20 md:py-24 px-6 lg:px-12 border-t border-studio-borderDark">
+        <div class="max-w-7xl mx-auto">
+            <!-- Heading (Fades Up) -->
+            <div class="reveal-up flex flex-col md:flex-row md:items-end justify-between mb-16">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-3">Design Previews Only</span>
+                    <h2 class="typewriter text-3xl sm:text-4xl font-serif min-h-[1.5em] md:min-h-[1.2em]" data-typewriter="Website Concepts">Website Concepts</h2>
+                </div>
+                <p class="text-studio-mutedText text-xs sm:text-sm font-light max-w-md mt-4 md:mt-0 leading-relaxed border-l border-studio-borderDark pl-4">
+                    The following previews are design mockups crafted in-house to show layouts, styling choices, and interactions. These are not real clients.
+                </p>
+            </div>
+
+            <!-- Concept Cards (Fade Up Staggered) -->
+            <div id="concepts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Concept 1 -->
+                <div class="reveal-up premium-card bg-studio-cardDark border border-studio-borderDark overflow-hidden group flex flex-col justify-between h-full">
+                    <div class="p-6 bg-studio-bgDark/50 border-b border-studio-borderDark relative aspect-video flex flex-col justify-center items-center">
+                        <span class="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-studio-accent uppercase bg-studio-cardDark px-2.5 py-0.5 border border-studio-borderDark">Preview 01</span>
+                        <h4 class="font-serif italic text-2xl tracking-wide text-white">Brew & Co.</h4>
+                        <p class="text-[7px] tracking-widest uppercase text-studio-accent mt-1">Artisanal Café</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-medium mb-1 text-white">Cafe Website Concept</h3>
+                            <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">Designed to display elegant menu sections and simplified direct WhatsApp reservation triggers.</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-studio-borderDark/40">
+                            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase">Concept Project</span>
+                            <span class="text-xs group-hover:translate-x-1 transition-transform duration-300 text-white">&rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 2 -->
+                <div class="reveal-up premium-card bg-studio-cardDark border border-studio-borderDark overflow-hidden group flex flex-col justify-between h-full">
+                    <div class="p-6 bg-[#161412] border-b border-studio-borderDark relative aspect-video flex flex-col justify-center items-center">
+                        <span class="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-studio-accent uppercase bg-studio-cardDark px-2.5 py-0.5 border border-studio-borderDark">Preview 02</span>
+                        <h4 class="font-serif text-xl uppercase tracking-widest text-amber-50">Spice House</h4>
+                        <p class="text-[7px] tracking-widest uppercase text-zinc-400 mt-1">Modern Dining</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-medium mb-1 text-white">Restaurant Concept</h3>
+                            <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">An elegant, visual-focused presentation layout optimized for high-quality food photography grids.</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-studio-borderDark/40">
+                            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase">Concept Project</span>
+                            <span class="text-xs group-hover:translate-x-1 transition-transform duration-300 text-white">&rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 3 -->
+                <div class="reveal-up premium-card bg-studio-cardDark border border-studio-borderDark overflow-hidden group flex flex-col justify-between h-full">
+                    <div class="p-6 bg-[#0E1311] border-b border-studio-borderDark relative aspect-video flex flex-col justify-center items-center">
+                        <span class="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-studio-accent uppercase bg-studio-cardDark px-2.5 py-0.5 border border-studio-borderDark">Preview 03</span>
+                        <h4 class="font-sans font-semibold text-lg uppercase text-emerald-100 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-studio-accent"></span>
+                            Healthcare
+                        </h4>
+                        <p class="text-[7px] tracking-widest uppercase text-emerald-500 mt-0.5">Medical & Wellness</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-medium mb-1 text-white">Clinic Website Concept</h3>
+                            <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">A clear layout prioritizing practitioner directories, treatments, and simple query booking.</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-studio-borderDark/40">
+                            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase">Concept Project</span>
+                            <span class="text-xs group-hover:translate-x-1 transition-transform duration-300 text-white">&rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 4 -->
+                <div class="reveal-up premium-card bg-studio-cardDark border border-studio-borderDark overflow-hidden group flex flex-col justify-between h-full">
+                    <div class="p-6 bg-[#1A1618] border-b border-studio-borderDark relative aspect-video flex flex-col justify-center items-center">
+                        <span class="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-studio-accent uppercase bg-studio-cardDark px-2.5 py-0.5 border border-studio-borderDark">Preview 04</span>
+                        <h4 class="font-serif text-xl tracking-widest text-rose-50 uppercase">Glamour</h4>
+                        <p class="text-[7px] tracking-widest uppercase text-rose-300 mt-1">Studio & Salon</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-medium mb-1 text-white">Salon Website Concept</h3>
+                            <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">Built as an aesthetic portfolio format focused heavily on styling listings and work galleries.</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-studio-borderDark/40">
+                            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase">Concept Project</span>
+                            <span class="text-xs group-hover:translate-x-1 transition-transform duration-300 text-white">&rarr;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Process Section -->
+    <div id="process" class="bg-studio-bgDark py-20 md:py-24 px-6 lg:px-12 border-t border-studio-borderDark">
+        <div class="max-w-7xl mx-auto">
+            <!-- Heading (Fades Up) -->
+            <div class="reveal-up text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-2">Our Method</span>
+                <h2 class="typewriter text-3xl sm:text-4xl font-serif text-white min-h-[1.5em] md:min-h-[1.2em]" data-typewriter="Clear Steps to Launch">Clear Steps to Launch</h2>
+            </div>
+            
+            <!-- Cards (Fade Up Staggered) -->
+            <div id="process-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="reveal-up premium-card p-6 border border-studio-borderDark bg-studio-cardDark/50">
+                    <span class="text-2xl font-serif text-studio-accent">01 /</span>
+                    <h3 class="text-base font-semibold mt-2 mb-2 text-white">Discover</h3>
+                    <p class="text-studio-mutedText text-xs leading-relaxed font-light">We discuss your goals, study local competitors, and plan your website's layout.</p>
+                </div>
+                <div class="reveal-up premium-card p-6 border border-studio-borderDark bg-studio-cardDark/50">
+                    <span class="text-2xl font-serif text-studio-accent">02 /</span>
+                    <h3 class="text-base font-semibold mt-2 mb-2 text-white">Design</h3>
+                    <p class="text-studio-mutedText text-xs leading-relaxed font-light">We design a custom layout that matches your business style and colors.</p>
+                </div>
+                <div class="reveal-up premium-card p-6 border border-studio-borderDark bg-studio-cardDark/50">
+                    <span class="text-2xl font-serif text-studio-accent">03 /</span>
+                    <h3 class="text-base font-semibold mt-2 mb-2 text-white">Build</h3>
+                    <p class="text-studio-mutedText text-xs leading-relaxed font-light">We build your website to load quickly and look great on all mobile screens.</p>
+                </div>
+                <div class="reveal-up premium-card p-6 border border-studio-borderDark bg-studio-cardDark/50">
+                    <span class="text-2xl font-serif text-studio-accent">04 /</span>
+                    <h3 class="text-base font-semibold mt-2 mb-2 text-white">Launch</h3>
+                    <p class="text-studio-mutedText text-xs leading-relaxed font-light">We help connect your domain, set up hosting, and publish your site live.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Pricing Section (Dark Background) -->
+    <section id="pricing" class="bg-studio-bgDark py-20 md:py-24 px-6 lg:px-12 border-t border-studio-borderDark">
+        <div class="max-w-7xl mx-auto">
+            <!-- Heading (Fades Up) -->
+            <div class="reveal-up text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-2">Pricing</span>
+                <h2 class="text-3xl sm:text-4xl font-serif text-white">Simple, Honest Pricing</h2>
+                <p class="text-studio-mutedText text-sm font-light mt-4">Choose the best package to grow your business online. No hidden fees, no complex contracts.</p>
+            </div>
+
+            <!-- Cards (Fade Up Staggered) -->
+            <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Package 1 -->
+                <div class="reveal-up premium-card p-8 border border-studio-borderDark bg-studio-cardDark/40 flex flex-col justify-between h-full font-light">
+                    <div>
+                        <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase bg-studio-cardDark px-2.5 py-1 border border-studio-borderDark">Starter Page</span>
+                        <h3 class="text-xl font-serif mt-4 mb-4 text-white">Starter Landing Page</h3>
+                        <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">Designed for direct marketing targets, simple informational menus, or a focused one-page website for businesses that need a clean online presence fast.</p>
+                        
+                        <ul class="text-[11px] text-white/80 space-y-3 border-t border-studio-borderDark/40 pt-6 mb-8 font-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Custom Single-Page Setup
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Mobile-Responsive Optimization
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Direct Call & WhatsApp Integration
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                30 Days Post-Release Care
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-[10px] tracking-widest uppercase font-semibold text-studio-mutedText mb-4">Starting package / Request quote</div>
+                        <a href="#contact" class="magnetic-btn block text-center py-3 border border-white/20 text-white text-xs tracking-widest uppercase font-medium hover:bg-white hover:text-studio-bgDark transition-all duration-300">
+                            Request Quote
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Package 2 (Highlighted) -->
+                <div class="reveal-up premium-card p-8 border-2 border-studio-accent bg-studio-cardDark/70 flex flex-col justify-between relative shadow-sm h-full font-light">
+                    <span class="absolute -top-3.5 right-6 text-[9px] tracking-widest font-semibold text-studio-bgDark bg-studio-accent px-4 py-1.5 uppercase font-mono">Recommended</span>
+                    <div>
+                        <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase bg-studio-cardDark px-2.5 py-1 border border-studio-borderDark">Full Website</span>
+                        <h3 class="text-xl font-serif mt-4 mb-4 text-white">Business Website</h3>
+                        <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">Optimized for dental clinics, styling salons, cafes, and local shops requiring structured information pages.</p>
+                        
+                        <ul class="text-[11px] text-white/80 space-y-3 border-t border-studio-borderDark/40 pt-6 mb-8 font-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Up to 5 Customized Site Pages
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Menu Display / Location Configuration
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Basic Local SEO Listing Setup
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                60 Days Post-Release Care
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-[10px] tracking-widest uppercase font-semibold text-studio-mutedText mb-4">Starting package / Request quote</div>
+                        <a href="#contact" class="magnetic-btn block text-center py-3 bg-studio-accent text-studio-bgDark text-xs tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300">
+                            Request Quote
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="reveal-up premium-card p-8 border border-studio-borderDark bg-studio-cardDark/40 flex flex-col justify-between h-full font-light">
+                    <div>
+                        <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase bg-studio-cardDark px-2.5 py-1 border border-studio-borderDark">Complete Support</span>
+                        <h3 class="text-xl font-serif mt-4 mb-4 text-white">Premium Site & Support</h3>
+                        <p class="text-studio-mutedText text-xs font-light leading-relaxed mb-6">Designed for businesses that want regular updates, menu changes, and ongoing website support.</p>
+                        
+                        <ul class="text-[11px] text-white/80 space-y-3 border-t border-studio-borderDark/40 pt-6 mb-8 font-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Custom Multi-Page Design
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Domain Setup & Launch Configuration
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Handled Monthly Content Updates
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1 h-1 bg-studio-accent rounded-full"></span>
+                                Regular Host Monitoring & Support
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-[10px] tracking-widest uppercase font-semibold text-studio-mutedText mb-4">Scope-based estimate</div>
+                        <a href="#contact" class="magnetic-btn block text-center py-3 border border-white/20 text-white text-xs tracking-widest uppercase font-medium hover:bg-white hover:text-studio-bgDark transition-all duration-300">
+                            Request Quote
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Final CTA & Functional Contact Section (Cream Background) -->
+    <section id="contact" class="bg-studio-bgLight text-studio-bgDark py-20 md:py-24 px-6 lg:px-12 border-t border-studio-borderLight">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            <!-- Left Column: Copy (Fades Up) -->
+            <div class="reveal-up lg:col-span-5 flex flex-col justify-between font-light">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-3">Let’s Connect</span>
+                    <h2 class="typewriter text-3xl sm:text-4xl md:text-5xl font-serif leading-[1.1] mb-6 text-studio-bgDark min-h-[1.5em] md:min-h-[1.2em]" data-typewriter="Let’s Build Something Great Together.">Let’s Build Something Great Together.</h2>
+                    <p class="text-studio-mutedText text-sm sm:text-base leading-relaxed mb-8">
+                        Ready to grow your online presence? Tell us about your business using the form, or reach out directly on WhatsApp for a quick chat. We would love to hear your ideas.
+                    </p>
+                </div>
+                
+                <div class="pt-6 border-t border-studio-borderLight font-light">
+                    <span class="text-xs uppercase tracking-[0.2em] text-studio-mutedText block mb-3">Main Call To Action:</span>
+                    <a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank" rel="noopener noreferrer" class="magnetic-btn inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-transparent border border-studio-bgDark text-studio-bgDark text-xs tracking-widest uppercase font-semibold hover:bg-studio-bgDark hover:text-white transition-colors duration-300">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3 1.489 4.935 1.49 5.4 0 9.795-4.39 9.798-9.795.002-2.618-1.01-5.08-2.859-6.93C16.628 2.07 14.17 1.056 11.558 1.056c-5.4 0-9.8 4.394-9.803 9.801-.001 1.93.504 3.812 1.461 5.48L2.24 21.8l5.632-1.477a9.73 9.73 0 0 0-1.225-1.169z"/></svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: Sleek Functional Contact Form (Fades Up after left content) -->
+            <div class="reveal-up lg:col-span-7 bg-white p-8 md:p-10 border border-studio-borderLight shadow-sm" style="--reveal-delay: 90ms;">
+                <!-- Replace 'your@email.com' with your actual recipient email -->
+                <form action="https://formsubmit.co/your@email.com" method="POST" class="space-y-6">
+                    <!-- FormSubmit Configurations -->
+                    <input type="hidden" name="_subject" value="New Project Inquiry - Blackframe Studio">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold text-studio-mutedText mb-2">Your Name</label>
+                            <input type="text" name="Name" required placeholder="E.g., Rahul Sharma" class="w-full bg-studio-bgLight/30 border-b border-studio-borderLight focus:border-studio-accent outline-none py-2.5 text-sm transition-colors text-studio-bgDark">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold text-studio-mutedText mb-2">Business Type</label>
+                            <input type="text" name="Business_Type" required placeholder="E.g., Cafe, Clinic, Salon" class="w-full bg-studio-bgLight/30 border-b border-studio-borderLight focus:border-studio-accent outline-none py-2.5 text-sm transition-colors text-studio-bgDark">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold text-studio-mutedText mb-2">WhatsApp Number</label>
+                            <input type="tel" name="WhatsApp_Number" required placeholder="E.g., +91 98765 43210" class="w-full bg-studio-bgLight/30 border-b border-studio-borderLight focus:border-studio-accent outline-none py-2.5 text-sm transition-colors text-studio-bgDark">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold text-studio-mutedText mb-2">Current Website / Instagram</label>
+                            <input type="text" name="Current_Website_or_Instagram" placeholder="E.g., instagram.com/brandname" class="w-full bg-studio-bgLight/30 border-b border-studio-borderLight focus:border-studio-accent outline-none py-2.5 text-sm transition-colors text-studio-bgDark">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest font-semibold text-studio-mutedText mb-2">Brief Message</label>
+                        <textarea rows="4" name="Message" required placeholder="Tell us briefly about your business and goals..." class="w-full bg-studio-bgLight/30 border-b border-studio-borderLight focus:border-studio-accent outline-none py-2.5 text-sm transition-colors text-studio-bgDark resize-none"></textarea>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="magnetic-btn w-full sm:w-auto px-8 py-4 bg-studio-bgDark text-white text-xs tracking-widest uppercase font-semibold hover:bg-studio-accent transition-colors">
+                            Send Inquiry &rarr;
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Footer -->
+    <footer class="bg-studio-bgDark border-t border-studio-borderDark py-16 px-6 lg:px-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-[11px] text-studio-mutedText">
+            <div class="flex items-center gap-2">
+                <span class="font-serif italic font-semibold text-xl text-white">B</span>
+                <span class="tracking-widest uppercase font-light border-l border-studio-borderDark pl-3">BLACKFRAME</span>
+            </div>
+            
+            <p class="font-light tracking-wide">&copy; <span id="year"></span> Blackframe Studio. Premium websites for local businesses. All rights reserved.</p>
+            
+            <div class="flex items-center gap-8 tracking-widest uppercase font-medium">
+                <a href="#services" class="hover:text-white transition-colors">Services</a>
+                <a href="#concepts" class="hover:text-white transition-colors">Concepts</a>
+                <a href="#contact" class="hover:text-white transition-colors text-studio-accent font-semibold">Inquire</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts & Premium Motion Engine -->
+    <script>
+        // Footer Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Responsive Mobile Menu Panel
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.setAttribute('d', 'M4 8h16M4 16h16');
+            } else {
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+        });
+
+        // Close Mobile Menu on Click
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('d', 'M4 8h16M4 16h16');
+            });
+        });
+
+        // 1. Scroll Progress Bar logic
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Motion Controls (Pre-flight checks for accessibility)
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+        // 2. Custom CSS Variable-Based Staggered Delay Engine
+        const setupStaggeredGrids = (gridId, delayOffset = 90) => {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            // Target all custom reveal components inside the grids
+            const items = grid.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
+            items.forEach((item, index) => {
+                item.style.setProperty('--reveal-delay', `${index * delayOffset}ms`); // Store delay in CSS variable
+            });
+        };
+
+        setupStaggeredGrids('services-grid', 90);
+        setupStaggeredGrids('concepts-grid', 90);
+        setupStaggeredGrids('process-grid', 90);
+        setupStaggeredGrids('pricing-grid', 90);
+        setupStaggeredGrids('industries-list', 80);
+
+        // Gather all reveal items globally and observe every single one
+        const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.05,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        // Observe every element - no elements with delayed properties are skipped
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 3. Magnetic Interactive Button Physics
+        const setupMagneticButtons = () => {
+            if (prefersReducedMotion) return;
+
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    // Subtle premium shift toward cursor (Limit pull range)
+                    btn.style.transform = `translate3d(${x * 0.15}px, ${y * 0.15}px, 0)`;
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate3d(0, 0, 0)';
+                });
+            });
+        };
+        setupMagneticButtons();
+
+        // 4. Hero Device Parallax Tilt Logic
+        const setupHeroMockupTilt = () => {
+            if (prefersReducedMotion || hasCoarsePointer) return;
+
+            const trigger = document.getElementById('hero-trigger');
+            const target = document.querySelector('.tilt-element');
+
+            if (!trigger || !target) return;
+
+            trigger.addEventListener('mousemove', (e) => {
+                const rect = trigger.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5; // normalized -0.5 to 0.5
+                const y = (e.clientY - rect.top) / rect.height - 0.5; // normalized -0.5 to 0.5
+                
+                // Fine, tiny rotation angles (Max 4.5 degrees)
+                const rotateX = -y * 4.5;
+                const rotateY = x * 4.5;
+
+                target.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            trigger.addEventListener('mouseleave', () => {
+                target.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        };
+        setupHeroMockupTilt();
+
+        // 5. Premium Scroll-Triggered Typewriter Engine
+        document.addEventListener('DOMContentLoaded', () => {
+            if (prefersReducedMotion) return; // Exit and respect system motion preference
+
+            const typewriterElements = document.querySelectorAll('.typewriter');
+
+            typewriterElements.forEach(el => {
+                const textToType = el.getAttribute('data-typewriter') || el.textContent;
+                el.textContent = ''; // Initialize empty to prevent visual jump before scroll-trigger
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            observer.unobserve(entry.target); // Trigger only once per load cycle
+                            el.classList.add('typing-cursor');
+                            typeText(el, textToType);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                observer.observe(el);
+            });
+
+            function typeText(element, text) {
+                let index = 0;
+                // Dynamically speed up typing pace for longer headers to stay engaging
+                const typingSpeed = text.length > 15 ? 28 : 65;
+                
+                function run() {
+                    if (index < text.length) {
+                        element.textContent += text.charAt(index);
+                        index++;
+                        setTimeout(run, typingSpeed);
+                    } else {
+                        element.classList.remove('typing-cursor'); // Remove caret once typing is finished
+                    }
+                }
+                run();
+            }
+        });
+    </script>
+</body>
+</html>
