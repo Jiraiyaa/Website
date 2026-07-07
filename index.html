@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="./assets/cafe-desktop.png" fetchpriority="high">
+    <link rel="preload" as="image" href="./assets/cafe-mobile.png" fetchpriority="high">
     
     <script>
         tailwind.config = {
@@ -230,7 +232,7 @@
                     <!-- Laptop Bezel Framework -->
                     <div class="relative w-full max-w-[420px] md:max-w-[480px] bg-[#1a1a1a] rounded-2xl border border-zinc-800 p-2 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden group hover:border-studio-accent transition-all duration-500">
                         <!-- Screen Surface -->
-                        <div class="aspect-video bg-[#FAF9F6] border border-zinc-900 rounded-lg overflow-hidden relative">
+                        <div class="aspect-video bg-[#101010] border border-zinc-900 rounded-lg overflow-hidden relative">
                             <!-- Reflective Gloss Overlay Sheet -->
                             <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.03] to-white/[0.08] pointer-events-none z-20"></div>
                             
@@ -240,27 +242,27 @@
                                     
                                     <!-- [LAPTOP] Slide 1: Premium Cafe -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/cafe-desktop.png" alt="Cafe Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/cafe-desktop.png" alt="Cafe Desktop Portfolio" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [LAPTOP] Slide 2: Clinic / Wellness -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/wellness-desktop.png" alt="Wellness Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/wellness-desktop.png" alt="Wellness Desktop Portfolio" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [LAPTOP] Slide 3: Restaurant / Local Brand -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/restaurant-desktop.png" alt="Restaurant Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/restaurant-desktop.png" alt="Restaurant Desktop Portfolio" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [LAPTOP] Slide 4: Salon / Beauty Studio -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/salon-desktop.png" alt="Salon Desktop Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/salon-desktop.png" alt="Salon Desktop Portfolio" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [LAPTOP] Slide 5: Duplicate of Slide 1 (For Seamless Horizontal Wrapping - transient transition frame) -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/cafe-desktop.png" alt="Cafe Desktop Portfolio Duplicate" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/cafe-desktop.png" alt="Cafe Desktop Portfolio Duplicate" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                 </div>
@@ -285,27 +287,27 @@
                                     
                                     <!-- [MOBILE] Slide 1: Premium Cafe -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/cafe-mobile.png" alt="Cafe Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/cafe-mobile.png" alt="Cafe Mobile Portfolio" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [MOBILE] Slide 2: Clinic / Wellness -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/wellness-mobile.png" alt="Wellness Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/wellness-mobile.png" alt="Wellness Mobile Portfolio" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [MOBILE] Slide 3: Restaurant / Local Brand -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/restaurant-mobile.png" alt="Restaurant Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/restaurant-mobile.png" alt="Restaurant Mobile Portfolio" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [MOBILE] Slide 4: Salon / Beauty Studio -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/salon-mobile.png" alt="Salon Mobile Portfolio" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/salon-mobile.png" alt="Salon Mobile Portfolio" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                     <!-- [MOBILE] Slide 5: Duplicate of Slide 1 -->
                                     <div class="w-[20%] h-full relative">
-                                        <img src="./assets/cafe-mobile.png" alt="Cafe Mobile Portfolio Duplicate" class="w-full h-full object-cover object-top">
+                                        <img src="./assets/cafe-mobile.png" alt="Cafe Mobile Portfolio Duplicate" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                                     </div>
 
                                 </div>
