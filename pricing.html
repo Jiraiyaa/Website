@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Blackframe Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Instrument Sans"','sans-serif'], serif: ['"Playfair Display"','serif'] }, colors: { studio: { bgDark:'#0A0A0A', cardDark:'#121212', bgLight:'#FAF9F6', mutedText:'#8E8C88', borderLight:'#D8D6D0', borderDark:'#222222', accent:'#C5A880' } } } } }
+  </script>
+  <style>
+    ::selection { background-color:#C5A880; color:#0A0A0A; }
+    .premium-card { transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+    .premium-card:hover { transform: translateY(-4px); border-color:#C5A880; box-shadow:0 10px 30px -10px rgba(197,168,128,0.16); }
+  </style>
+</head>
+<body class="bg-studio-bgDark text-white font-sans antialiased">
+  <header class="sticky top-0 z-50 bg-studio-bgDark/90 backdrop-blur-md border-b border-studio-borderDark">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-2 group">
+        <span class="font-serif italic font-semibold text-2xl tracking-tight group-hover:text-studio-accent transition-colors">B</span>
+        <span class="tracking-[0.25em] text-[10px] uppercase font-light border-l border-studio-borderDark pl-3">BLACKFRAME</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-[11px] tracking-widest uppercase font-medium text-white/85">
+        <a href="./index.html#services" class="hover:text-studio-accent transition-colors">Services</a>
+        <a href="./index.html#industries" class="hover:text-studio-accent transition-colors">Industries</a>
+        <a href="./index.html#concepts" class="hover:text-studio-accent transition-colors">Sample Websites</a>
+        <a href="./index.html#process" class="hover:text-studio-accent transition-colors">Process</a>
+        <a href="./pricing.html" class="text-studio-accent">Pricing</a>
+        <a href="./index.html#contact" class="hover:text-studio-accent transition-colors">Contact</a>
+      </nav>
+      <a href="./index.html#contact" class="px-5 py-2.5 bg-studio-accent text-studio-bgDark text-[11px] tracking-widest uppercase font-semibold hover:bg-white transition-colors">Get a Quote &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="py-20 md:py-28 px-6 lg:px-12 border-b border-studio-borderDark">
+      <div class="max-w-7xl mx-auto text-center">
+        <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-3">Pricing</span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-6">Simple, Transparent Pricing</h1>
+        <p class="text-studio-mutedText text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">Whether you're just getting started or ready to grow, we have a website package to suit your business and budget. Final pricing depends on your pages, features, content, and support needs.</p>
+      </div>
+    </section>
+
+    <section class="py-20 md:py-24 px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="premium-card p-8 border border-studio-borderDark bg-studio-cardDark/40 flex flex-col justify-between h-full font-light">
+          <div>
+            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase bg-studio-cardDark px-2.5 py-1 border border-studio-borderDark">Launch</span>
+            <h2 class="text-2xl font-serif mt-4 mb-4">Launch</h2>
+            <p class="text-studio-mutedText text-sm leading-relaxed mb-6">Perfect for businesses that need a professional online presence.</p>
+            <ul class="text-[12px] text-white/80 space-y-3 border-t border-studio-borderDark/40 pt-6 mb-8 font-light">
+              <li>• Single-page website</li>
+              <li>• Mobile responsive</li>
+              <li>• WhatsApp integration</li>
+              <li>• Contact form</li>
+              <li>• Basic SEO setup</li>
+              <li>• 30 days of support</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xl font-serif mb-4">Starting from ₹XX,XXX</div>
+            <a href="./index.html#contact" class="block text-center py-3 border border-white/20 text-white text-xs tracking-widest uppercase font-medium hover:bg-white hover:text-studio-bgDark transition-all duration-300">Get a Quote</a>
+          </div>
+        </div>
+
+        <div class="premium-card p-8 border-2 border-studio-accent bg-studio-cardDark/70 flex flex-col justify-between relative h-full font-light">
+          <span class="absolute -top-3.5 right-6 text-[9px] tracking-widest font-semibold text-studio-bgDark bg-studio-accent px-4 py-1.5 uppercase font-mono">Recommended</span>
+          <div>
+            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase bg-studio-cardDark px-2.5 py-1 border border-studio-borderDark">Grow</span>
+            <h2 class="text-2xl font-serif mt-4 mb-4">Grow</h2>
+            <p class="text-studio-mutedText text-sm leading-relaxed mb-6">Everything most small businesses need to attract more customers online.</p>
+            <ul class="text-[12px] text-white/80 space-y-3 border-t border-studio-borderDark/40 pt-6 mb-8 font-light">
+              <li>• Up to 5 custom pages</li>
+              <li>• Mobile responsive</li>
+              <li>• WhatsApp & enquiry forms</li>
+              <li>• Google Maps</li>
+              <li>• Basic SEO setup</li>
+              <li>• Google Analytics</li>
+              <li>• 60 days of support</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xl font-serif mb-4">Starting from ₹XX,XXX</div>
+            <a href="./index.html#contact" class="block text-center py-3 bg-studio-accent text-studio-bgDark text-xs tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300">Get a Quote</a>
+          </div>
+        </div>
+
+        <div class="premium-card p-8 border border-studio-borderDark bg-studio-cardDark/40 flex flex-col justify-between h-full font-light">
+          <div>
+            <span class="text-[9px] tracking-widest font-mono text-studio-accent uppercase bg-studio-cardDark px-2.5 py-1 border border-studio-borderDark">Scale</span>
+            <h2 class="text-2xl font-serif mt-4 mb-4">Scale</h2>
+            <p class="text-studio-mutedText text-sm leading-relaxed mb-6">For growing businesses that need ongoing website management.</p>
+            <ul class="text-[12px] text-white/80 space-y-3 border-t border-studio-borderDark/40 pt-6 mb-8 font-light">
+              <li>• Custom multi-page website</li>
+              <li>• Priority support</li>
+              <li>• Monthly content updates</li>
+              <li>• Performance monitoring</li>
+              <li>• SEO enhancements</li>
+              <li>• Ongoing maintenance</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xl font-serif mb-4">Custom Quote</div>
+            <a href="./index.html#contact" class="block text-center py-3 border border-white/20 text-white text-xs tracking-widest uppercase font-medium hover:bg-white hover:text-studio-bgDark transition-all duration-300">Let's Talk</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-studio-bgLight text-studio-bgDark py-16 px-6 lg:px-12">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-serif mb-4">Need exact pricing?</h2>
+        <p class="text-studio-mutedText text-sm leading-relaxed mb-8">Share your business type, pages, and features. We'll recommend the right package and quote clearly.</p>
+        <a href="./index.html#contact" class="inline-flex px-8 py-4 bg-studio-bgDark text-white text-xs tracking-widest uppercase font-semibold hover:bg-studio-accent transition-colors">Get My Free Quote &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-studio-bgDark border-t border-studio-borderDark py-10 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-[11px] text-studio-mutedText">
+      <span class="tracking-widest uppercase font-light">BLACKFRAME</span>
+      <p>&copy; <span id="year"></span> Blackframe Studio. Premium websites for growing businesses.</p>
+      <a href="./index.html" class="text-studio-accent hover:text-white transition-colors uppercase tracking-widest">Back to Home</a>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
