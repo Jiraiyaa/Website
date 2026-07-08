@@ -143,7 +143,11 @@
         }
         .sync-carousel-desktop, 
         .sync-carousel-mobile {
-            animation: syncHorizontalCarousel 22s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+            transform: translateX(0);
+            transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .carousel-dot {
+            transition: background-color 250ms ease, opacity 250ms ease, transform 250ms ease;
         }
     </style>
 </head>
@@ -313,6 +317,17 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="absolute -bottom-10 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/70 px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-md" aria-label="Website preview carousel">
+                        <button type="button" data-carousel-action="prev" aria-label="Previous website preview" class="grid h-8 w-8 place-items-center rounded-full border border-white/15 text-lg leading-none text-white/85 transition-colors hover:border-studio-accent hover:text-studio-accent focus:outline-none focus:ring-2 focus:ring-studio-accent/70">‹</button>
+                        <div class="flex items-center gap-2" role="tablist" aria-label="Website preview choices">
+                            <button type="button" data-carousel-dot="0" aria-label="Show cafe preview" aria-current="true" class="carousel-dot h-2 w-2 rounded-full bg-studio-accent"></button>
+                            <button type="button" data-carousel-dot="1" aria-label="Show wellness preview" aria-current="false" class="carousel-dot h-2 w-2 rounded-full bg-white/35"></button>
+                            <button type="button" data-carousel-dot="2" aria-label="Show restaurant preview" aria-current="false" class="carousel-dot h-2 w-2 rounded-full bg-white/35"></button>
+                            <button type="button" data-carousel-dot="3" aria-label="Show salon preview" aria-current="false" class="carousel-dot h-2 w-2 rounded-full bg-white/35"></button>
+                        </div>
+                        <button type="button" data-carousel-action="next" aria-label="Next website preview" class="grid h-8 w-8 place-items-center rounded-full border border-white/15 text-lg leading-none text-white/85 transition-colors hover:border-studio-accent hover:text-studio-accent focus:outline-none focus:ring-2 focus:ring-studio-accent/70">›</button>
                     </div>
                 </div>
             </div>
@@ -901,6 +916,93 @@
             });
         };
         setupHeroMockupTilt();
+
+        const setupMockupCarousel = () => {
+            const tracks = document.querySelectorAll('.sync-carousel-desktop, .sync-carousel-mobile');
+            const dots = document.querySelectorAll('[data-carousel-dot]');
+            const buttons = document.querySelectorAll('[data-carousel-action]');
+            const slideCount = 4;
+            const transition = 'transform 700ms cubic-bezier(0.16, 1, 0.3, 1)';
+            let currentIndex = 0;
+            let timerId;
+            let resetId;
+
+            if (!tracks.length) return;
+
+            const setTransition = (enabled) => {
+                tracks.forEach(track => {
+                    track.style.transition = enabled ? transition : 'none';
+                });
+            };
+
+            const render = () => {
+                const activeDot = currentIndex === slideCount ? 0 : currentIndex;
+                tracks.forEach(track => {
+                    track.style.transform = `translateX(-${currentIndex * 20}%)`;
+                });
+                dots.forEach((dot, index) => {
+                    const isActive = index === activeDot;
+                    dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+                    dot.style.backgroundColor = isActive ? '#C5A880' : 'rgba(255, 255, 255, 0.35)';
+                    dot.style.opacity = isActive ? '1' : '0.75';
+                    dot.style.transform = isActive ? 'scale(1.25)' : 'scale(1)';
+                });
+            };
+
+            const restartTimer = () => {
+                window.clearInterval(timerId);
+                if (!prefersReducedMotion) {
+                    timerId = window.setInterval(() => goTo(currentIndex + 1, false), 5500);
+                }
+            };
+
+            const goTo = (targetIndex, shouldRestart = true) => {
+                window.clearTimeout(resetId);
+                setTransition(true);
+
+                if (targetIndex >= slideCount) {
+                    currentIndex = slideCount;
+                    render();
+                    resetId = window.setTimeout(() => {
+                        setTransition(false);
+                        currentIndex = 0;
+                        render();
+                        window.requestAnimationFrame(() => setTransition(true));
+                    }, 720);
+                } else if (targetIndex < 0) {
+                    setTransition(false);
+                    currentIndex = slideCount;
+                    render();
+                    window.requestAnimationFrame(() => {
+                        setTransition(true);
+                        currentIndex = slideCount - 1;
+                        render();
+                    });
+                } else {
+                    currentIndex = targetIndex;
+                    render();
+                }
+
+                if (shouldRestart) restartTimer();
+            };
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const direction = button.dataset.carouselAction === 'next' ? 1 : -1;
+                    goTo(currentIndex + direction);
+                });
+            });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    goTo(Number(dot.dataset.carouselDot));
+                });
+            });
+
+            render();
+            restartTimer();
+        };
+        setupMockupCarousel();
 
         // 5. Premium Scroll-Triggered Typewriter Engine
         document.addEventListener('DOMContentLoaded', () => {
