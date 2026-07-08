@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://jiraiyaa.github.io/Website/sitemap.xml
