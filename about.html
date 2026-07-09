@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Blackframe Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Instrument Sans"','sans-serif'], serif: ['"Playfair Display"','serif'] }, colors: { studio: { bgDark:'#0A0A0A', cardDark:'#121212', bgLight:'#FAF9F6', mutedText:'#8E8C88', borderLight:'#D8D6D0', borderDark:'#222222', accent:'#C5A880' } } } } }
+  </script>
+  <style>
+    ::selection { background-color:#C5A880; color:#0A0A0A; }
+    .soft-card { transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+    .soft-card:hover { transform: translateY(-3px); border-color:#C5A880; box-shadow:0 14px 34px -18px rgba(197,168,128,0.22); }
+  </style>
+</head>
+<body class="bg-studio-bgDark text-white font-sans antialiased">
+  <header class="sticky top-0 z-50 bg-studio-bgDark/90 backdrop-blur-md border-b border-studio-borderDark">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-2 group">
+        <span class="font-serif italic font-semibold text-2xl tracking-tight group-hover:text-studio-accent transition-colors">B</span>
+        <span class="tracking-[0.25em] text-[10px] uppercase font-light border-l border-studio-borderDark pl-3">BLACKFRAME</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-[11px] tracking-widest uppercase font-medium text-white/85">
+        <a href="./index.html#services" class="hover:text-studio-accent transition-colors">Services</a>
+        <a href="./about.html" class="text-studio-accent">About</a>
+        <a href="./index.html#industries" class="hover:text-studio-accent transition-colors">Industries</a>
+        <a href="./index.html#concepts" class="hover:text-studio-accent transition-colors">Sample Websites</a>
+        <a href="./index.html#process" class="hover:text-studio-accent transition-colors">Process</a>
+        <a href="./pricing.html" class="hover:text-studio-accent transition-colors">Pricing</a>
+        <a href="./index.html#contact" class="hover:text-studio-accent transition-colors">Contact</a>
+      </nav>
+      <a href="./index.html#contact" class="px-5 py-2.5 bg-studio-accent text-studio-bgDark text-[11px] tracking-widest uppercase font-semibold hover:bg-white transition-colors">Get a Quote &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative overflow-hidden border-b border-studio-borderDark px-6 lg:px-12 py-20 md:py-28">
+      <div class="absolute right-[-18rem] top-[-18rem] h-[34rem] w-[34rem] rounded-full bg-studio-accent/10 blur-[120px]"></div>
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-end relative z-10">
+        <div class="lg:col-span-7">
+          <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-4">About Blackframe</span>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-7">Quiet design. Clear structure. Websites that feel built, not assembled.</h1>
+        </div>
+        <div class="lg:col-span-5 border-l border-studio-borderDark pl-6">
+          <p class="text-studio-mutedText text-sm sm:text-base leading-relaxed font-light">Blackframe Studio builds premium websites for businesses that want to look sharper online without making the process complicated. We care about clean design, clear words, fast pages, and simple paths for customers to enquire, book, call, or visit.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-studio-bgLight text-studio-bgDark px-6 lg:px-12 py-20 md:py-24">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-3">How we work</span>
+          <h2 class="text-3xl sm:text-4xl font-serif mb-6">We keep the work focused on what actually helps your business.</h2>
+          <p class="text-studio-mutedText text-sm leading-relaxed font-light">A good website should not feel heavy, confusing, or overdesigned. It should explain who you are, show what you offer, build trust quickly, and make the next step obvious. That is the standard we design around.</p>
+        </div>
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="soft-card border border-studio-borderLight bg-white p-7">
+            <span class="text-[10px] tracking-widest uppercase text-studio-accent font-semibold">01</span>
+            <h3 class="text-lg font-medium mt-3 mb-2">No template-first thinking</h3>
+            <p class="text-studio-mutedText text-sm leading-relaxed font-light">We start with your business, your customers, and the action you want people to take. The design follows from there.</p>
+          </div>
+          <div class="soft-card border border-studio-borderLight bg-white p-7">
+            <span class="text-[10px] tracking-widest uppercase text-studio-accent font-semibold">02</span>
+            <h3 class="text-lg font-medium mt-3 mb-2">Clean design, not clutter</h3>
+            <p class="text-studio-mutedText text-sm leading-relaxed font-light">Every section needs a reason to exist. If it does not help the visitor understand or act, it does not belong.</p>
+          </div>
+          <div class="soft-card border border-studio-borderLight bg-white p-7">
+            <span class="text-[10px] tracking-widest uppercase text-studio-accent font-semibold">03</span>
+            <h3 class="text-lg font-medium mt-3 mb-2">Built for real customers</h3>
+            <p class="text-studio-mutedText text-sm leading-relaxed font-light">Menus, booking buttons, service lists, maps, calls, forms, WhatsApp links — the small details matter because customers use them.</p>
+          </div>
+          <div class="soft-card border border-studio-borderLight bg-white p-7">
+            <span class="text-[10px] tracking-widest uppercase text-studio-accent font-semibold">04</span>
+            <h3 class="text-lg font-medium mt-3 mb-2">Simple after launch</h3>
+            <p class="text-studio-mutedText text-sm leading-relaxed font-light">A website should be easy to maintain. We keep the structure clean so updates, changes, and future improvements stay manageable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 lg:px-12 py-20 md:py-24 border-y border-studio-borderDark">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6">
+          <div class="border border-studio-borderDark bg-studio-cardDark/60 p-8 md:p-10">
+            <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-4">What we believe</span>
+            <h2 class="text-3xl sm:text-4xl font-serif mb-6">Premium does not have to mean loud.</h2>
+            <p class="text-studio-mutedText text-sm leading-relaxed font-light mb-5">For most businesses, trust is built through restraint: good spacing, strong images, clear wording, fast loading, and a page that feels considered from top to bottom.</p>
+            <p class="text-studio-mutedText text-sm leading-relaxed font-light">That is the Blackframe approach — modern, calm, practical, and made to help people understand your business quickly.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+          <div class="border border-studio-borderDark bg-studio-cardDark p-6 min-h-[150px] flex flex-col justify-between">
+            <span class="text-3xl font-serif text-studio-accent">01</span>
+            <p class="text-xs uppercase tracking-widest text-white/70">Clarity before decoration</p>
+          </div>
+          <div class="border border-studio-borderDark bg-studio-cardDark p-6 min-h-[150px] flex flex-col justify-between">
+            <span class="text-3xl font-serif text-studio-accent">02</span>
+            <p class="text-xs uppercase tracking-widest text-white/70">Mobile experience matters</p>
+          </div>
+          <div class="border border-studio-borderDark bg-studio-cardDark p-6 min-h-[150px] flex flex-col justify-between">
+            <span class="text-3xl font-serif text-studio-accent">03</span>
+            <p class="text-xs uppercase tracking-widest text-white/70">Words should sound human</p>
+          </div>
+          <div class="border border-studio-borderDark bg-studio-cardDark p-6 min-h-[150px] flex flex-col justify-between">
+            <span class="text-3xl font-serif text-studio-accent">04</span>
+            <p class="text-xs uppercase tracking-widest text-white/70">Design should support action</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-studio-bgLight text-studio-bgDark px-6 lg:px-12 py-20 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <span class="text-xs uppercase tracking-[0.25em] font-semibold text-studio-accent block mb-4">Work with us</span>
+        <h2 class="text-3xl sm:text-4xl font-serif mb-6">Need a website that looks serious and is easy for customers to use?</h2>
+        <p class="text-studio-mutedText text-sm sm:text-base leading-relaxed font-light mb-8">Tell us what your business does. We will suggest a clean structure, the right pages, and the features that make sense for your customers.</p>
+        <a href="./index.html#contact" class="inline-flex px-8 py-4 bg-studio-bgDark text-white text-xs tracking-widest uppercase font-semibold hover:bg-studio-accent transition-colors">Start a Website Brief &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-studio-bgDark border-t border-studio-borderDark py-10 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-[11px] text-studio-mutedText">
+      <span class="tracking-widest uppercase font-light">BLACKFRAME</span>
+      <p>&copy; <span id="year"></span> Blackframe Studio. Premium websites for growing businesses.</p>
+      <div class="flex items-center gap-6 uppercase tracking-widest">
+        <a href="./index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="./pricing.html" class="hover:text-white transition-colors">Pricing</a>
+        <a href="./index.html#contact" class="text-studio-accent hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
